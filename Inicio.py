@@ -84,7 +84,7 @@ def encode_image_to_base64(image_path):
     except FileNotFoundError:
         return "Error: La imagen no se encontró."
 
-# Panel Lateral de Configuración (Sin enlaces externos con errores)
+# Panel Lateral de Configuración
 with st.sidebar:
     st.subheader("📚 Magia Educativa")
     st.markdown("¡Convierte tus dibujos en el personaje principal de una aventura literaria mágica gracias a la Inteligencia Artificial!")
@@ -198,4 +198,11 @@ if canvas_result.image_data is not None and api_key and analyze_button:
                     st.markdown(f'<div class="story-box">{story_content}</div>', unsafe_allow_html=True)
 
             except Exception as e:
-                st.error(f"Ocurrió un error al procesar la solicitud: {
+                st.error(f"Ocurrió un error al procesar la solicitud: {e}")
+
+else:
+    if analyze_button:
+        if not api_key:
+            st.warning("🔒 Por favor ingresa tu Clave de OpenAI.", icon="⚠️")
+        elif not canvas_result.image_data is not None:
+            st.warning("⚠️ Dibuja algo en el tablero primero.", icon="⚠️")
